@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>황여경 프로 · 정규직 전환 검토 보고</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #534AB7; --primary-dark: #3730A3; --primary-light: #EAE8F7;
+    --primary-mid: #7B74CF; --text: #1A1A2E; --text-sub: #5A5A7A;
+    --text-muted: #9090AA; --border: #E0DEFA; --bg: #F8F7FF; --white: #FFFFFF;
+    --green: #2DB87A; --green-light: #E6F7F1; --amber: #F59E0B; --amber-light: #FEF3C7;
+  }
+
+  body { font-family: 'Noto Sans KR', sans-serif; color: var(--text); font-size: 13px; line-height: 1.6; background: #EDEDF5; min-height: 100vh; padding: 36px 0; }
+
+  .wrap { width: 880px; margin: 0 auto; background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 16px rgba(83,74,183,0.08); }
+  .page-header { background: var(--primary); padding: 28px 36px 24px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .doc-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: rgba(255,255,255,0.55); text-transform: uppercase; margin-bottom: 8px; }
+  .person-name { font-size: 26px; font-weight: 700; color: white; letter-spacing: -0.5px; margin-bottom: 4px; }
+  .person-meta { font-size: 13px; color: rgba(255,255,255,0.75); font-weight: 400; }
+  .page-header-right { text-align: right; }
+  .verdict-badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 24px; background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,200,100,0.7); color: white; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .verdict-dot { width: 7px; height: 7px; border-radius: 50%; background: #FFD966; }
+  .convert-date { font-size: 11px; color: rgba(255,255,255,0.65); }
+  .pdf-btn { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; padding: 6px 14px; border-radius: 16px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.45); color: white; font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .pdf-btn:hover { background: rgba(255,255,255,0.28); }
+
+  @media print {
+    html, body { height: auto !important; overflow: visible !important; background: white !important; padding: 0 !important; }
+    .wrap { margin: 0 !important; box-shadow: none !important; border-radius: 0 !important; width: 100% !important; }
+    .pdf-btn { display: none !important; }
+  }
+
+  .page-body { padding: 28px 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+  .card.full { grid-column: 1 / -1; }
+  .card.reason { background: var(--primary-light); border: 1.5px solid var(--primary); grid-column: 1 / -1; }
+  .card.reason .card-title { color: var(--primary); }
+  .card.next-role { background: #FFF0F5; border: 1.5px solid #E91E8C; grid-column: 1 / -1; }
+  .card.next-role .card-title { color: #AD1457; }
+  .card.next-role .exp-cat { color: #AD1457; }
+  .card.people-opinion { background: #F0FDF4; border: 1.5px solid #86EFAC; grid-column: 1 / -1; }
+  .card.people-opinion .card-title { color: #166534; }
+  .card-title { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--primary); text-transform: uppercase; margin-bottom: 14px; }
+  .overview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .ov-label { font-size: 10px; color: var(--text-muted); margin-bottom: 3px; font-weight: 500; }
+  .ov-value { font-size: 13px; font-weight: 700; color: var(--text); }
+  .link-badges { display: flex; gap: 6px; margin-top: 5px; }
+  .link-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; background: var(--primary-light); color: var(--primary-dark); border: 1px solid var(--border); transition: background 0.15s; }
+  .link-badge:hover { background: var(--primary); color: white; }
+  .score-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .score-block { text-align: center; min-width: 64px; }
+  .score-num { font-size: 28px; font-weight: 700; line-height: 1; color: var(--primary); }
+  .score-denom { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+  .score-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; }
+  .score-divider { width: 1px; height: 40px; background: var(--border); }
+  .score-bar-wrap { flex: 1; }
+  .score-bar-label { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
+  .score-bar-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+  .score-bar-fill { height: 100%; border-radius: 3px; background: var(--primary); }
+  .score-bar-fill.self { background: var(--primary-mid); opacity: 0.4; }
+  .eval-row { padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; }
+  .eval-name { font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .eval-comment { color: var(--text-sub); line-height: 1.5; }
+  .tag-group { margin-bottom: 12px; }
+  .tag-group:last-child { margin-bottom: 0; }
+  .tag-group-label { font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+  .tag.green { background: var(--green-light); color: var(--green); }
+  .tag.amber { background: var(--amber-light); color: #92400E; }
+  .exp-list { list-style: none; }
+  .exp-list li { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; align-items: flex-start; }
+  .exp-list li:last-child { border-bottom: none; }
+  .exp-cat { flex-shrink: 0; width: 80px; font-weight: 700; color: var(--text-muted); font-size: 11px; padding-top: 1px; }
+  .exp-cat.pink { color: var(--primary); }
+  .exp-desc { color: var(--text-sub); line-height: 1.45; }
+  .reason-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .reason-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; background: var(--primary); color: white; }
+  .reason-detail { font-size: 12px; color: var(--text-sub); }
+  .salary-row { display: flex; align-items: center; gap: 5px; font-size: 13px; flex-wrap: nowrap; white-space: nowrap; }
+  .salary-old { color: var(--text-muted); text-decoration: line-through; font-size: 11px; white-space: nowrap; }
+  .salary-arrow { color: var(--primary); font-weight: 700; flex-shrink: 0; }
+  .salary-new { font-weight: 700; color: var(--text); white-space: nowrap; }
+  .salary-up { font-size: 10px; font-weight: 700; color: var(--green); background: var(--green-light); padding: 2px 6px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
+  .people-section { margin-bottom: 14px; }
+  .people-section:last-child { margin-bottom: 0; }
+  .people-section-label { font-size: 10px; font-weight: 700; color: #166534; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .people-opinion-text { font-size: 12px; color: var(--text-sub); line-height: 1.6; background: white; border-radius: 6px; padding: 10px 14px; border: 1px solid #BBF7D0; }
+  .capacity-list { list-style: none; background: white; border-radius: 6px; border: 1px solid #BBF7D0; overflow: hidden; }
+  .capacity-list li { display: flex; gap: 10px; padding: 7px 12px; border-bottom: 1px solid #BBF7D0; font-size: 12px; align-items: flex-start; }
+  .capacity-list li:last-child { border-bottom: none; }
+  .cap-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .cap-dot.green { background: var(--green); }
+  .cap-dot.amber { background: var(--amber); }
+  .cap-desc { color: var(--text-sub); line-height: 1.45; }
+  .card.highlight { background: white; border: 1.5px solid var(--primary); grid-column: 1 / -1; }
+  .card.highlight .card-title { color: var(--primary); }
+  .highlight-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 14px; }
+  .highlight-stats { display: flex; gap: 14px; }
+  .highlight-stat { flex: 1; background: var(--primary-light); border-radius: 8px; padding: 16px; text-align: center; }
+  .highlight-stat-num { font-size: 24px; font-weight: 700; color: var(--primary); }
+  .highlight-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  @media (max-width: 900px) {
+    .wrap { width: 100%; border-radius: 0; }
+    body { padding: 0; }
+    .overview-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="page-header">
+    <div>
+      <div class="doc-label">정규직 전환 검토 보고 · 2026 상반기</div>
+      <div class="person-name">황여경 프로</div>
+      <div class="person-meta">경영부문 · 미래전략본부 미래전략 홍보전략팀 · 콘텐츠에디터 / P</div>
+    </div>
+    <div class="page-header-right">
+      <div class="verdict-badge" style="background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.5);"><span class="verdict-dot" style="background:#A5F3C4;"></span>전환 확정</div>
+      <div class="convert-date">전환 예정일 2026.07.31</div>
+      <div><button class="pdf-btn" onclick="window.print()">📄 PDF 다운로드</button></div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="card full">
+      <div class="card-title">대상자 개요</div>
+      <div class="overview-grid">
+        <div><div class="ov-label">채용형태</div><div class="ov-value">인턴 → 정규직</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px;">인하대학교 / 신입</div></div>
+        <div><div class="ov-label">입사일 / 기간</div><div class="ov-value">2026.03.03 / 5개월</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px;">*조기 전환자</div></div>
+        <div><div class="ov-label">기존 프로젝트</div><div class="ov-value">IG매거진 4개 채널</div></div>
+        <div><div class="ov-label">연봉 조정</div><div class="salary-row" style="margin-top:2px;"><span class="salary-new">2,900만원</span><span style="font-size:11px;color:var(--text-muted);margin-left:4px;">(변동 없음)</span></div></div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+        <div class="ov-label" style="margin-bottom:6px;">첨부 자료</div>
+        <div class="link-badges">
+          <a class="link-badge" href="https://drive.google.com/file/d/1Ey3m1AI8GA6JwMqzeowC0P_--nGuo41_/view" target="_blank">📄 이력서</a>
+          <a class="link-badge" href="https://drive.google.com/file/d/1KnskcDeeV9MBEIJIicueHec0gMsN-KF-/view?usp=sharing" target="_blank">🎨 포트폴리오</a>
+          <a class="link-badge" href="https://drive.google.com/file/d/1KS4uFtoY8mmtwg3qVXnSSsIJJ2sVMsA4/view" target="_blank">📋 수습평가서</a>
+          <a class="link-badge" href="https://docs.google.com/presentation/d/1Gc6cUjE__9foIQo6sQpgpHtTF56LM3LN3iFMFAMFIGI/edit" target="_blank">📝 활동과제</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">평가 결과</div>
+      <div class="score-row">
+        <div class="score-block"><div class="score-num">83</div><div class="score-denom">/ 100</div><div class="score-label">조직장</div></div>
+        <div class="score-divider"></div>
+        <div class="score-bar-wrap">
+          <div class="score-bar-label"><span>조직장 평가</span><span>83점</span></div>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width:83%"></div></div>
+          <div class="score-bar-label"><span>셀프 리뷰</span><span>95점</span></div>
+          <div class="score-bar-track"><div class="score-bar-fill self" style="width:95%"></div></div>
+        </div>
+      </div>
+      <div class="eval-row">
+        <div class="eval-name">평가자 김소연B</div>
+        <div class="eval-comment">시장의 트렌드를 포착하고 유저의 반응을 유도하는 감각이 우수. 훈련으로 도달하기 어려운 센스의 영역으로, 평균 이상의 아웃풋을 도출해내는 점을 높게 평가. 직무에 대한 건강한 욕심과 주도성이 향후 성장의 발판이 될 것.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">강점 · 보완</div>
+      <div class="tag-group"><div class="tag-group-label">강점</div><div class="tags"><span class="tag green">트렌드 포착 감각</span><span class="tag green">콘텐츠 반응 유도력</span><span class="tag green">데이터 기반 기획</span><span class="tag green">주도성</span><span class="tag green">시각화 역량</span></div></div>
+      <div class="tag-group"><div class="tag-group-label">보완</div><div class="tags"><span class="tag amber">콘텐츠 소재 다양성 확장</span><span class="tag amber">피드백 수용 회복탄력성</span><span class="tag amber">자기 주도적 다음 단계 발굴</span></div></div>
+    </div>
+    <div class="card reason">
+      <div class="card-title">전환 사유</div>
+      <div class="reason-row"><span class="reason-badge">📌 증원</span><span class="reason-detail">프로젝트 운영 인력 필요 → 수습 성과 인정으로 정규직 전환 / IG매거진 운영 지속</span></div>
+    </div>
+    <div class="card next-role">
+      <div class="card-title">전환 후 담당 업무</div>
+      <ul class="exp-list">
+        <li><span class="exp-cat pink">프로젝트</span><span class="exp-desc">IG매거진 4개 채널</span></li>
+        <li><span class="exp-cat pink">주요 업무</span><span class="exp-desc">인스타그램 매거진 콘텐츠 기획·제작 / 트렌드 소재 발굴 / 성과 분석 기반 기획 개선</span></li>
+      </ul>
+    </div>
+    <div class="card full">
+      <div class="card-title">수습 중 수행 업무 · 프로젝트</div>
+      <ul class="exp-list">
+        <li><span class="exp-cat">IG매거진</span><span class="exp-desc">4개 채널 운영 — 누적 323건 콘텐츠 발행, 최고 조회수 352만, 최고 좋아요 10.2만 달성.</span></li>
+        <li><span class="exp-cat">포포: 오키나와</span><span class="exp-desc">&lt;포포: 죽어도 사랑해&gt; 오키나와 편 기획 → 조회수 11만, 도달 20만, 좋아요 1.2만, 공유 6천.</span></li>
+        <li><span class="exp-cat">킹키 편</span><span class="exp-desc">&lt;우리 사이엔 편지가 있다&gt; 킹키 편 재구성 기획 → 조회수 204만, 좋아요 10.2만, 공유 4만 (채널 최고 인터랙션).</span></li>
+        <li><span class="exp-cat">기획 콘텐츠</span><span class="exp-desc">젠슨 황 유퀴즈 AI 가상 출연 콘텐츠 기획 — 높은 인터랙션 달성 / '거제 테토력' 콘텐츠 조회수 58만, 좋아요 3.8만.</span></li>
+      </ul>
+    </div>
+    <div class="card highlight">
+      <div class="card-title">핵심성과</div>
+      <div class="highlight-name">콘텐츠 발행 총 323건 : 푸시 116건 / 로우키프린트 93건 / 바이트드롭 55건 / 씨유인서울 59건</div>
+      <div class="highlight-stats">
+        <div class="highlight-stat"><div class="highlight-stat-num">352만</div><div class="highlight-stat-label">조회수</div></div>
+        <div class="highlight-stat"><div class="highlight-stat-num">10.2만</div><div class="highlight-stat-label">좋아요</div></div>
+        <div class="highlight-stat"><div class="highlight-stat-num">53건 기획</div><div class="highlight-stat-label">내외부 콘텐츠</div></div>
+      </div>
+    </div>
+    <div class="card full">
+      <div class="card-title">입사 전 주요 경험</div>
+      <ul class="exp-list">
+        <li><span class="exp-cat">전공</span><span class="exp-desc">인하대학교 스포츠과학과·디자인융합학과 복수전공 (학점 4.3/4.5) / GTQ 1급·한국사능력검정시험 1급 / Adobe·Figma·Notion</span></li>
+        <li><span class="exp-cat">콘텐츠 경력</span><span class="exp-desc">(주)아우어크리에이티브 콘텐츠 에디터 8개월 — 휠라 코리아·휠라 언더웨어·뉴발란스 키즈·투쿨포스쿨 SNS 운영 (2025.04~2025.12)</span></li>
+        <li><span class="exp-cat">채널 성과</span><span class="exp-desc">모아모아 매거진 운영 — 55건 발행·팔로워 6K 달성·최고 33만 뷰 기록 (2024.08~2025.02)</span></li>
+        <li><span class="exp-cat">수상·활동</span><span class="exp-desc">2024 파리올림픽 팀코리아 뱃지 디자인(코리아하우스 현지 판매) / 코삭챌린저 / 국대스마터즈 1기 활동 우수상</span></li>
+      </ul>
+    </div>
+    <div class="card people-opinion">
+      <div class="card-title">HR 검토 의견 (피플팀)</div>
+      <div class="people-section"><div class="people-opinion-text">트렌드 포착과 반응 유도 감각이 탁월한 인원으로, IG매거진 4개 채널에서 조회수 352만·좋아요 10.2만 등 정량 성과 확인.<br>경력직 결원 포지션을 인턴으로 즉시 채워낸 즉시전력감. 소재 다양성 확대와 피드백 회복탄력성은 전환 후 성장 과제.</div></div>
+      <div class="people-section">
+        <div class="people-section-label">강점 (홍보전략팀 확인)</div>
+        <ul class="capacity-list">
+          <li><span class="cap-dot green"></span><span class="cap-desc">트렌드 포착 후 브랜드·채널별 맥락에 맞게 재구성하는 감각 탁월 — 킹키 편 조회수 204만, 좋아요 10.2만 달성</span></li>
+          <li><span class="cap-dot green"></span><span class="cap-desc">콘텐츠 소재 선정부터 카피라이팅·시각화(Figma 활용)까지 단독 제작 역량 보유</span></li>
+        </ul>
+      </div>
+      <div class="people-section">
+        <div class="people-section-label">업무 역량</div>
+        <ul class="capacity-list">
+          <li><span class="cap-dot green"></span><span class="cap-desc">IG매거진 4개 채널 전 과정 주도적 운영, 누적 323건 발행 및 최고 조회수 352만 달성</span></li>
+          <li><span class="cap-dot green"></span><span class="cap-desc">데이터 기반 소재 선정 및 기획 전략 수립 능력 보유 — 직무에 대한 건강한 욕심과 주도성 확인</span></li>
+          <li><span class="cap-dot amber"></span><span class="cap-desc">개인 관심사 중심 소재 발굴 한계 인식 및 피드백 수용 시 회복탄력성 — 전환 후 데이터 기반 소재 선정 범위 객관화 필요</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
